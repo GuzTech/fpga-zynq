@@ -20,7 +20,7 @@
 /* originally 512 * ..., but Rocket gets upper half of RAM */
 #define CONFIG_SYS_SDRAM_SIZE (256 * 1024 * 1024) 
 
-#define CONFIG_ZYNQ_SERIAL_UART1
+#define CONFIG_ZYNQ_SERIAL_UART0
 #define CONFIG_ZYNQ_GEM0
 #define CONFIG_ZYNQ_GEM_PHY_ADDR0	0
 
