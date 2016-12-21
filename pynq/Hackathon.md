@@ -6,7 +6,7 @@ Oguz Meteer, Viktorio El Hakim
 
 ###Goals
 Decided on a project: **multicore RISCV system on PYNQ-Z1**.
-First goal was to get the rocket-core (RISCV from UC Berkeley) on the PYNQ working. After that we want to get a simple "Hello World" like application running. Once this works, we want to then use the PicoRV32 core by Clifford Wolf (which is much smaller) to build a multicore system. Communication between the cores will most likely be the Nebula ring used in Starburst, but other options are still up for discussion.
+First goal is to get the rocket-core (RISCV from UC Berkeley) on the PYNQ working. After that we want to get a simple "Hello World" like application running. Once this works, we want to then use the PicoRV32 core by Clifford Wolf (which is much smaller) to build a multicore system. Communication between the cores will most likely be the Nebula ring used in Starburst, but other options are still up for discussion.
 
 ###Results
 * We started on the initial porting from Zybo to PYNQ. We did manage to generate a bitstream without problems, however we still need to check if the PS system configuration from the Zybo is also correctly applicable to the PYNQ. The file that holds the configuration is `fpga-zynq/pynq/src/tcl/pync_bd.tcl`.
@@ -109,3 +109,21 @@ reading uramdisk.image.gz
 
 Starting kernel ...
 ```
+
+## 2016-12-21
+###Attendees:
+Oguz Meteer
+
+###Goals
+Solve the [issue](https://github.com/GuzTech/fpga-zynq/issues/1) of the Linux kernel not booting. The issue states several potential issues that could be the cause. After Linux boots, we want to execute a simple Hello World application using the front-end server on Linux on the ARM.
+
+###Actions
+Tried the obvious thing, which is to try the `devicetree.dts` file that was already on the SD card with the PYNQ Linux image. Since this worked, I tried to generate a DTS file myself, which also worked. Tried to execute a Hello World application on the RISCV on the FPGA.
+
+###Results
+* Got the kernel booting with the `devicetree.dts` file from the PYNQ Linux image, so our renamed Zybo device tree file was not usable with the PYNQ board.
+* Generated a DTS file by following [this](http://www.wiki.xilinx.com/Build+Device+Tree+Blob). In the SDK, I generated another BSP project, selecting device tree as the project type, and the results were `skeleton.dtsi`, `system.dts`, and `zynq-7000.dtsi`. Renamed the dts file accordingly, and the DTB file was created without an issue, which solves the [issue](https://github.com/GuzTech/fpga-zynq/issues/1) that we wanted to solve.
+* The front-end server hangs when trying to execute a Hello World application on the RISCV. This might be because:
+ * The DTS file still has some incorrect settings.
+ * The Vivado project is not configured correctly.
+ * The bitstream is not loaded on the FPGA.
