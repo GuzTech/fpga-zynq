@@ -127,3 +127,16 @@ Tried the obvious thing, which is to try the `devicetree.dts` file that was alre
  * The DTS file still has some incorrect settings.
  * The Vivado project is not configured correctly.
  * The bitstream is not loaded on the FPGA.
+
+## 2016-12-23
+###Attendees:
+Oguz Meteer, Viktorio El Hakim
+
+###Goals
+* Figure out why during boot we get an htif error that corresponds with the HTIF hardware that loads our RISCV application into the instruction memory of our rocket core.
+* Get Linux kernel 4.8.6 running on the PYNQ, and later run Arch Linux on it as well.
+
+###Results
+* We tested the Zybo files on the Zybo and it also gave us the same htif error during boot. The front-end server did work correctly however, so that error is not the issue it seems.
+* We managed to build the kernel without issues, but we could not get the kernel to start.
+* For both issues, it would be very useful if we could use JTAG and try to figure out where and why the front-end server hangs and why the kernel doesn't boot. For the next time, we want to look into how we might accomplish this. We could probably also use Chipscope for low-level stuff.
