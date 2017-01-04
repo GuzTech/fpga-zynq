@@ -835,17 +835,17 @@ CONFIG.PCW_UIPARAM_DDR_ENABLE {1} \
 CONFIG.PCW_UIPARAM_DDR_FREQ_MHZ {525} \
 CONFIG.PCW_UIPARAM_DDR_HIGH_TEMP {Normal (0-85)} \
 CONFIG.PCW_UIPARAM_DDR_MEMORY_TYPE {DDR 3} \
-CONFIG.PCW_UIPARAM_DDR_PARTNO {Custom} \
-CONFIG.PCW_UIPARAM_DDR_ROW_ADDR_COUNT {14} \
+CONFIG.PCW_UIPARAM_DDR_PARTNO {MT41J256M16 RE-125} \
+CONFIG.PCW_UIPARAM_DDR_ROW_ADDR_COUNT {15} \
 CONFIG.PCW_UIPARAM_DDR_SPEED_BIN {DDR3_1066F} \
 CONFIG.PCW_UIPARAM_DDR_TRAIN_DATA_EYE {1} \
 CONFIG.PCW_UIPARAM_DDR_TRAIN_READ_GATE {1} \
 CONFIG.PCW_UIPARAM_DDR_TRAIN_WRITE_LEVEL {1} \
 CONFIG.PCW_UIPARAM_DDR_T_FAW {40.0} \
-CONFIG.PCW_UIPARAM_DDR_T_RAS_MIN {35} \
-CONFIG.PCW_UIPARAM_DDR_T_RC {50.625} \
-CONFIG.PCW_UIPARAM_DDR_T_RCD {13.125} \
-CONFIG.PCW_UIPARAM_DDR_T_RP {13.125} \
+CONFIG.PCW_UIPARAM_DDR_T_RAS_MIN {35.0} \
+CONFIG.PCW_UIPARAM_DDR_T_RC {48.91} \
+CONFIG.PCW_UIPARAM_DDR_T_RCD {7} \
+CONFIG.PCW_UIPARAM_DDR_T_RP {7} \
 CONFIG.PCW_UIPARAM_DDR_USE_INTERNAL_VREF {0} \
 CONFIG.PCW_USB0_PERIPHERAL_ENABLE {1} \
 CONFIG.PCW_USB0_PERIPHERAL_FREQMHZ {60} \
@@ -1397,6 +1397,33 @@ CONFIG.PCW_WDT_WDT_IO.VALUE_SRC {DEFAULT} \
   create_bd_addr_seg -range 0x00001000 -offset 0x43C00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs M_AXI/Reg] SEG_system_Reg
   create_bd_addr_seg -range 0x20000000 -offset 0x00000000 [get_bd_addr_spaces S_AXI] [get_bd_addr_segs processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM] SEG_processing_system7_0_HP0_DDR_LOWOCM
 
+  # Perform GUI Layout
+  regenerate_bd_layout -layout_string {
+   guistr: "# # String gsaved with Nlview 6.5.12  2016-01-29 bk=1.3547 VDI=39 GEI=35 GUI=JA:1.6
+#  -string -flagsOSRD
+preplace port DDR -pg 1 -y 70 -defaultsOSRD
+preplace port FCLK_RESET0_N -pg 1 -y 110 -defaultsOSRD
+preplace port S_AXI -pg 1 -y 80 -defaultsOSRD
+preplace port M_AXI -pg 1 -y 220 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 90 -defaultsOSRD
+preplace port ext_clk_in -pg 1 -y 260 -defaultsOSRD
+preplace inst proc_sys_reset_0 -pg 1 -lvl 1 -y 360 -defaultsOSRD
+preplace inst axi_interconnect_0 -pg 1 -lvl 4 -y 220 -defaultsOSRD
+preplace inst axi_interconnect_1 -pg 1 -lvl 2 -y 140 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 3 -y 150 -defaultsOSRD
+preplace netloc S_AXI_1 1 0 2 NJ 80 NJ
+preplace netloc processing_system7_0_DDR 1 3 2 NJ 70 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 3 1 1150
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 5 30 270 NJ 270 NJ 310 1120 100 NJ
+preplace netloc proc_sys_reset_0_interconnect_aresetn 1 1 3 370 320 NJ 320 1140
+preplace netloc processing_system7_0_FIXED_IO 1 3 2 NJ 90 NJ
+preplace netloc axi_interconnect_0_M00_AXI 1 4 1 NJ
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 1 3 390 330 NJ 330 1150
+preplace netloc axi_interconnect_1_M00_AXI 1 2 1 N
+preplace netloc ext_clk_in_1 1 0 4 20 260 380 260 680 300 1130
+levelinfo -pg 1 0 200 530 900 1290 1450 -top 0 -bot 450
+",
+}
 
   # Restore current instance
   current_bd_instance $oldCurInst
